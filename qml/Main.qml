@@ -13,14 +13,37 @@ Window{
         }
 
         DicSelector{
-            id:source
+            id:source_dic
             width:parent.width
             height:parent.height*0.15
         }
         DicSelector{
-            id:target
+            id:target_dic
             width:parent.width
             height:parent.height*0.15
+        }
+
+        Row {
+            width: parent.width
+            height: parent.height*0.6
+
+            Column{
+                width: parent.width*0.4
+                height: parent.height
+            }
+
+            TextEdit {
+                id: textEdit
+                width: parent.width*0.3
+                height: parent.height
+                text: qsTr("Text Edit")
+                font.pixelSize: 12
+            }
+
+            Column {
+                width: parent.width*0.3
+                height: parent.height
+            }
         }
     }
 
