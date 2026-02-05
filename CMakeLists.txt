@@ -19,7 +19,7 @@ qt_add_qml_module(appdataSpliter
     QML_FILES
         qml/Main.qml
         qml/components/DicSelector.qml
-        QML_FILES qml/components/Part.qml
+        qml/components/Part.qml
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

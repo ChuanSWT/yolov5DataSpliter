@@ -30,6 +30,29 @@ Window{
             Column{
                 width: parent.width*0.4
                 height: parent.height
+
+                Text {
+                    text: qsTr("划分设置")
+                    font.pixelSize: 24
+                }
+                Part{
+                    id:train_part
+                    width: parent.width
+                    height: parent.height*0.3
+                    type:"训练集占比(%)"
+                }
+                Part{
+                    id:verify_part
+                    width: parent.width
+                    height: parent.height*0.3
+                    type:"验证集占比(%)"
+                }
+                Part{
+                    id:test_part
+                    width: parent.width
+                    height: parent.height*0.3
+                    type:"测试集占比(%)"
+                }
             }
 
             TextEdit {
@@ -43,6 +66,7 @@ Window{
             Column {
                 width: parent.width*0.3
                 height: parent.height
+
             }
         }
     }
