@@ -1,5 +1,4 @@
 import QtQuick
-
 Item {
 
     property string type:"none"
