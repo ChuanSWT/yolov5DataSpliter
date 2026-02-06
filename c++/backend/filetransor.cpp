@@ -25,18 +25,39 @@ void FileTransor::Work(){
         RaiseERROR("源文件 找不到labels子目录");
         return;
     }
-    //==扫描文件-------------------------
+    //==扫描目录，录入文件名-------------------------
     QDir images_dir(src_dir.filePath("images"));
     QDir labels_dir(src_dir.filePath("labels"));
 
-    QFileInfoList list = images_dir.entryInfoList(
+    QFileInfoList image_list = images_dir.entryInfoList(
         QDir::Files | QDir::NoDotAndDotDot
         );
-
-    for (const QFileInfo& info : list) {
-        qDebug() << info.fileName()
-        << info.absoluteFilePath();
+    QFileInfoList labels_list = labels_dir.entryInfoList(
+        QDir::Files | QDir::NoDotAndDotDot
+        );
+    QSet<QString> images;
+    QSet<QString> labels;
+    for (const QFileInfo& info : image_list) {
+        images.insert(info.fileName());
     }
+    for (const QFileInfo& info : labels_list) {
+        labels.insert(info.fileName());
+    }
+    //==检测每张图片是否有对应的.txt-----------------------------
+    for(QString str:images){
+        QString temp=str;
+        while(temp.size()&&temp.back()!='.')
+            temp.chop(1);//删除一个字符
+        temp.append("txt");
+
+        if(!labels.contains(temp)){
+            qDebug()<<temp;
+            emit RaiseERROR("images目录中 "+str+"没有对应的.txt文件");
+            return;
+        }
+    }
+    //至此，每个image都有对应的.txt label文件
+    //==开始进行复制-------------------------------------------
+
     emit RaiseERROR("你还没写完呢");
-    emit Finished();
 }
