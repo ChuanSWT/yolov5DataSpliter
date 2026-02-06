@@ -82,7 +82,7 @@ Window{
                     id: textEdit
                     width: parent.width
                     height: parent.height
-                    text: qsTr("Text Edit")
+                    text: backend.info
                     font.pixelSize: 12
                 }
             }
@@ -98,7 +98,7 @@ Window{
                 ProgressBar {
                     from: 0
                     to: 100
-                    value: 50
+                    value: backend.progress
                 }
                 Button{
                     text:"开始划分"

@@ -28,6 +28,7 @@ qt_add_qml_module(appdataSpliter
     SOURCES
         c++/backend/Backend.h
         c++/backend/Backend.cpp
+        SOURCES c++/backend/filetransor.h c++/backend/filetransor.cpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.

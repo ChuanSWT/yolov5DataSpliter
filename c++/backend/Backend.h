@@ -4,6 +4,7 @@
 #include <QObject>
 #include <QtQml>
 #include <QDir>
+#include "filetransor.h"
 #include <qdebug.h>
 class Backend : public QObject
 {
@@ -16,6 +17,9 @@ class Backend : public QObject
     Q_PROPERTY(QString train_part READ GetTrainPart NOTIFY TrainPartChanged)
     Q_PROPERTY(QString verify_part READ GetVerifyPart NOTIFY VerifyPartChanged)
     Q_PROPERTY(QString test_part READ GetTestPart NOTIFY TestPartChanged)
+
+    Q_PROPERTY(int progress READ GetProgress NOTIFY ProgressChanged)
+    Q_PROPERTY(QString info READ GetInfo NOTIFY InfoChanged)
 public:
     explicit Backend(QObject *parent = nullptr);
     //Get 方法，前端隐调用
@@ -24,6 +28,8 @@ public:
     QString GetTrainPart(){return part_mp["train"];}
     QString GetVerifyPart(){return part_mp["verify"];}
     QString GetTestPart(){return part_mp["test"];}
+    int GetProgress(){return progress;}
+    QString GetInfo(){return info;}
 public:
     //更新路径选择
     Q_INVOKABLE void UpdateSourcePath(QString path);
@@ -38,11 +44,15 @@ signals:
     void TrainPartChanged();
     void VerifyPartChanged();
     void TestPartChanged();
+    void ProgressChanged();
+    void InfoChanged();
 private:
     QString source_path;
     QString target_path;
     //划分细节中 关键词到数值的映射
     QMap<QString,QString> part_mp;//[train,verify,test]
+    int progress;
+    QString info;
 };
 
 #endif // BACKEND_H
