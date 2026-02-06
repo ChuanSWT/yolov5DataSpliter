@@ -24,12 +24,14 @@ Window{
             width:parent.width
             height:parent.height*0.15
             path:backend.source_path
+            button_name:"源路径"
         }
         DicSelector{
             id:target_dic
             width:parent.width
             height:parent.height*0.15
             path:backend.target_path
+            button_name:"目标路径"
         }
         //====下半部分-------------------------------------
         Row {
@@ -48,7 +50,7 @@ Window{
                 Part{
                     id:train_part
                     width: parent.width
-                    height: parent.height*0.3
+                    height: parent.height*0.1
 
                     p_type:"训练集占比(%)"
                     p_text:backend.train_part
@@ -56,7 +58,7 @@ Window{
                 Part{
                     id:verify_part
                     width: parent.width
-                    height: parent.height*0.3
+                    height: parent.height*0.1
 
                     p_type:"验证集占比(%)"
                     p_text:backend.verify_part
@@ -64,7 +66,7 @@ Window{
                 Part{
                     id:test_part
                     width: parent.width
-                    height: parent.height*0.3
+                    height: parent.height*0.1
                     p_type:"测试集占比(%)"
                     p_text:backend.test_part
                 }
