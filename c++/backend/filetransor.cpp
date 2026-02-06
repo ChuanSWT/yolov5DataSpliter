@@ -86,13 +86,65 @@ void FileTransor::Work(){
     //###开始进行文件操作###//
     //==建立目标目录-------------------------------------------
     tg_dir.mkpath("splited_dataset/images");
+    tg_dir.mkpath("splited_dataset/images/train");
+    tg_dir.mkpath("splited_dataset/images/val");
+    tg_dir.mkpath("splited_dataset/images/test");
     tg_dir.mkpath("splited_dataset/labels");
-    //==开始进行复制-------------------------------------------
-    int cnt=names.size();
-    int cur=0;
-    for(auto [image,label]:names){
-        qDebug()<<image<<" "<<label;
-    }
-    emit RaiseERROR("你还没写完");
+    tg_dir.mkpath("splited_dataset/labels/train");
+    tg_dir.mkpath("splited_dataset/labels/val");
+    tg_dir.mkpath("splited_dataset/labels/test");
 
+    QDir splited_dataset=tg_dir.filePath("splited_dataset");
+    QDir tg_images_dir(splited_dataset.filePath("images"));
+    QDir tg_images_train_dir(tg_images_dir.filePath("train"));
+    QDir tg_images_verify_dir(tg_images_dir.filePath("val"));
+    QDir tg_images_test_dir(tg_images_dir.filePath("test"));
+
+    QDir tg_labels_dir(splited_dataset.filePath("labels"));
+    QDir tg_labels_train_dir(tg_labels_dir.filePath("train"));
+    QDir tg_labels_verify_dir(tg_labels_dir.filePath("val"));
+    QDir tg_labels_test_dir(tg_labels_dir.filePath("test"));
+    //==开始进行复制-------------------------------------------
+    int m=names.size();
+    int cur=0;
+
+    for(int i=0;i<names.size();++i){
+        auto [img_name,lbl_name]=names[i];
+        //源图片路径
+        QString src_image_path=images_dir.filePath(img_name);
+        //源标签路径
+        QString src_label_path=labels_dir.filePath(lbl_name);
+
+        //目标图片路径
+        QString tg_image_path;
+        //目标标签路径
+        QString tg_label_path;
+
+        if((double)i/m<(double)train_p/100){//train
+            //装载目标
+            tg_image_path=tg_images_train_dir.filePath(img_name);
+            tg_label_path=tg_labels_train_dir.filePath(lbl_name);
+
+            QFile::copy(src_image_path,tg_image_path);
+            QFile::copy(src_label_path,tg_label_path);
+            continue;
+        }
+        if((double)i/m<(double)(train_p+verify_p)/100){//val
+            tg_image_path=tg_images_verify_dir.filePath(img_name);
+            tg_label_path=tg_labels_verify_dir.filePath(lbl_name);
+
+            QFile::copy(src_image_path,tg_image_path);
+            QFile::copy(src_label_path,tg_label_path);
+            continue;
+        }
+        tg_image_path=tg_images_test_dir.filePath(img_name);
+        tg_label_path=tg_labels_test_dir.filePath(lbl_name);
+
+        QFile::copy(src_image_path,tg_image_path);
+        QFile::copy(src_label_path,tg_label_path);
+
+        continue;
+    }
+    //emit RaiseERROR("你还没写完");
+    emit Finished();
 }

@@ -68,6 +68,10 @@ part_mp["train"],part_mp["verify"],part_mp["test"]);
         info=err;
         emit InfoChanged();
     });
+    connect(worker,&FileTransor::Finished,this,[=](){
+        progress=100;
+        emit ProgressChanged();
+    });
     //...链接自动销毁信号...//
     connect(worker, &FileTransor::Finished, th, &QThread::quit);
     connect(worker, &FileTransor::Finished, worker, &QObject::deleteLater);
