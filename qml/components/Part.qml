@@ -1,20 +1,23 @@
-import QtQuick
-Item {
+    import QtQuick
+    Item {
 
-    property string type:"none"
-    property string text:input.text
-    Row{
-        anchors.fill:parent
-        Text{
-            id:text
-            height:parent.height
-            text:type
-        }
-        TextInput{
-            id:input
-            height:parent.height
-            width:parent.width-text.width
-            color:"tomato"
+        property string p_type:"none"
+        property alias p_text:input.text
+        Row{
+            anchors.fill:parent
+            Text{
+                id:left_text
+                height:parent.height
+                text:p_type
+            }
+            TextInput{
+                id:input
+                height:parent.height
+                width:parent.width-left_text.width
+                color:"tomato"
+                onTextChanged: {
+                    console.log("用户输入：", input.text)
+                }
+            }
         }
     }
-}

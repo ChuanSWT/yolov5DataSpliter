@@ -12,7 +12,12 @@ qt_add_executable(appdataSpliter
     main.cpp
 )
 
-#加入模块
+target_include_directories(appdataSpliter
+    PRIVATE
+        ${CMAKE_CURRENT_SOURCE_DIR}/c++
+        ${CMAKE_CURRENT_SOURCE_DIR}/c++/backend
+)
+#加入qml模块
 qt_add_qml_module(appdataSpliter
     URI DataSpliter
     VERSION 1.0
@@ -20,6 +25,9 @@ qt_add_qml_module(appdataSpliter
         qml/Main.qml
         qml/components/DicSelector.qml
         qml/components/Part.qml
+    SOURCES
+        c++/backend/Backend.h
+        c++/backend/Backend.cpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
