@@ -1,4 +1,6 @@
 #include "filetransor.h"
+#include <algorithm>
+#include <random>
 
 FileTransor::FileTransor(QObject *parent)
     : QObject{parent},progress(0)
@@ -9,7 +11,20 @@ QString train_str,QString verify_str,QString test_str)
     train_str(train_str),verify_str(verify_str),test_str(test_str)
 {}
 void FileTransor::Work(){
-    //progress=10;emit Progress(progress);
+    //==接收划分数字----------------------------------
+    QVector<bool> s2n_ok(3,true);
+    int train_p,verify_p,test_p;
+    train_p=train_str.toInt(&s2n_ok[0]);
+    verify_p=verify_str.toInt(&s2n_ok[1]);
+    test_p=test_str.toInt(&s2n_ok[2]);
+    if(!s2n_ok[0]||!s2n_ok[1]||!s2n_ok[2]){
+        emit RaiseERROR("划分细节 填写有非数字");
+        return;
+    }
+    if(train_p+verify_p+test_p!=100){
+        emit RaiseERROR("划分细节 填写数字和不为100");
+        return;
+    }
     //==打开路径------------------------
     QUrl src_url(src);
     QUrl tg_url(tg);
@@ -44,6 +59,7 @@ void FileTransor::Work(){
         labels.insert(info.fileName());
     }
     //==检测每张图片是否有对应的.txt-----------------------------
+    QVector<QPair<QString,QString>> names;//顺便存储一下
     for(QString str:images){
         QString temp=str;
         while(temp.size()&&temp.back()!='.')
@@ -55,9 +71,28 @@ void FileTransor::Work(){
             emit RaiseERROR("images目录中 "+str+"没有对应的.txt文件");
             return;
         }
+        names.push_back({str,temp});
     }
     //至此，每个image都有对应的.txt label文件
+    //进行打乱
+    std::random_device rd;
+    std::mt19937 gen(rd());
+    std::shuffle(names.begin(), names.end(), gen);
+    //==防止目标目录数据重叠------------------------------------
+    if(tg_dir.exists("splited_dataset")){
+        RaiseERROR("目标目录 已经存在");
+        return;
+    }
+    //###开始进行文件操作###//
+    //==建立目标目录-------------------------------------------
+    tg_dir.mkpath("splited_dataset/images");
+    tg_dir.mkpath("splited_dataset/labels");
     //==开始进行复制-------------------------------------------
+    int cnt=names.size();
+    int cur=0;
+    for(auto [image,label]:names){
+        qDebug()<<image<<" "<<label;
+    }
+    emit RaiseERROR("你还没写完");
 
-    emit RaiseERROR("你还没写完呢");
 }
