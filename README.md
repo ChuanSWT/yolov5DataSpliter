@@ -28,6 +28,6 @@ dataset/
 ```
 不仅支持GUI操作，还支持自定义划分百分比，支持一定的数据校验\[1\]
 
-![界面截图](https://imgur.com/sFqaEJg)
+![界面截图](https://drive.google.com/thumbnail?id=1QYSd7iIypwSQQrVXRQIA79dmdvuS3MRp&sz=w1484)
 
 \[1\]:验证每个图片文件都有对应的.txt标注文件
