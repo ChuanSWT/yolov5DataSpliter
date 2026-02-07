@@ -70,6 +70,8 @@ part_mp["train"],part_mp["verify"],part_mp["test"]);
     });
     connect(worker,&FileTransor::Finished,this,[=](){
         progress=100;
+        info="完成";
+        emit InfoChanged();
         emit ProgressChanged();
     });
     //...链接自动销毁信号...//

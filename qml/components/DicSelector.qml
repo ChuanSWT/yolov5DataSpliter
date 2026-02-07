@@ -5,12 +5,13 @@ import Qt.labs.platform
 
 
 Item {
-    width: 400
-    height: 100
+    //width: 400
+    //height: 100
 
     property string button_name: "选择目录"
     property string path: ""
-
+    property string button_color
+    property string path_color
     FolderDialog {
         id: folderDialog
         title: "选择一个目录"
@@ -20,25 +21,42 @@ Item {
             path = folderDialog.currentFolder
         }
     }
-
+    Rectangle{
+        anchors.fill:parent
+        color:path_color
     Row {
         anchors.fill: parent
         anchors.margins: parent.height * 0.2
         Button {
             height: parent.height
             width: parent.width * 0.3
-            text: button_name
+            background: Rectangle {
+                color: button_color
+            }
+            contentItem: Text {
+                text: button_name
+                color: "black"          // 👈 文本颜色
+                font.pixelSize: 16
+                horizontalAlignment: Text.AlignHCenter
+                verticalAlignment: Text.AlignVCenter
+            }
             onClicked: {
                 folderDialog.open()
             }
         }
 
         Text {
+            text: path
             height: parent.height
             width: parent.width * 0.7
-            text: path
+            wrapMode: Text.WordWrap
             horizontalAlignment: Text.AlignHCenter
             verticalAlignment: Text.AlignVCenter
+
+
+
         }
+
+    }
     }
 }
