@@ -1,51 +1,33 @@
-# First Level Heading
+# 将YOLOV5 的裸数据集 转化为 train/val/test
 
-Paragraph.
+我们拿到的数据集可能是这样的
+```
+dataset/
+├── images/
+│   ├── 0001.jpg
+│   ├── 0002.jpg
+├── labels/
+│   ├── 0001.txt
+│   └── 0002.txt
+```
+没有区分train/val/test，但是yolov5训练时需要前者
 
-## Second Level Heading
+这个程序，可以将以上的文件结构，在一个新的目录下展开为这样:
+```
+dataset/
+├── images/
+│   ├── train/
+│   │   ├── 0001.jpg
+│   └── val/
+│       ├── 0002.jpg
+├── labels/
+│   ├── train/
+│   │   ├── 0001.txt
+│   └── val/
+│       ├── 0002.txt
+```
+不仅支持GUI操作，还支持自定义划分百分比，支持一定的数据校验\[1\]
 
-Paragraph.
+![界面截图](https://imgur.com/sFqaEJg)
 
-- bullet
-+ other bullet
-* another bullet
-    * child bullet
-
-1. ordered
-2. next ordered
-
-### Third Level Heading
-
-Some *italic* and **bold** text and `inline code`.
-
-An empty line starts a new paragraph.
-
-Use two spaces at the end  
-to force a line break.
-
-A horizontal ruler follows:
-
----
-
-Add links inline like [this link to the Qt homepage](https://www.qt.io),
-or with a reference like [this other link to the Qt homepage][1].
-
-    Add code blocks with
-    four spaces at the front.
-
-> A blockquote
-> starts with >
->
-> and has the same paragraph rules as normal text.
-
-First Level Heading in Alternate Style
-======================================
-
-Paragraph.
-
-Second Level Heading in Alternate Style
----------------------------------------
-
-Paragraph.
-
-[1]: https://www.qt.io
+\[1\]:验证每个图片文件都有对应的.txt标注文件
