@@ -6,7 +6,7 @@ Window{
     width:720
     height:480
     visible:true
-    title:"hi"
+    title:"yolov5DataSpliter"
     Rectangle{
         anchors.fill:parent
         color:"#F2D79D"
