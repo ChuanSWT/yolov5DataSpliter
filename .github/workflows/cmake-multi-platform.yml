@@ -28,7 +28,7 @@ jobs:
 
     - name: Deploy Qt
       run: |
-        windeployqt --qmldir . build\Release\yolov5DataSpliter.exe
+        windeployqt --qmldir . build\Release\appdataSpliter.exe
 
     - name: Upload
       uses: actions/upload-artifact@v4
