@@ -6,12 +6,12 @@ on:
 
 jobs:
   build:
+
     runs-on: windows-latest
 
     steps:
 
-    - name: Checkout
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
     - name: Install Qt
       uses: jurplel/install-qt-action@v4
@@ -25,8 +25,13 @@ jobs:
 
     - name: Build
       run: cmake --build build --config Release
-    - name: Upload Build
+
+    - name: Deploy Qt
+      run: |
+        windeployqt --qmldir . build\Release\yolov5DataSpliter.exe
+
+    - name: Upload
       uses: actions/upload-artifact@v4
       with:
-        name: app
-        path: build/
+        name: windows-build
+        path: build/Release/
