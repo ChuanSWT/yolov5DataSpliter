@@ -3,6 +3,7 @@
 
 #include <QObject>
 #include <QtQml>
+#include <qqml.h>
 #include <QDir>
 #include "filetransor.h"
 #include <qdebug.h>

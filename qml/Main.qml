@@ -1,6 +1,6 @@
 import QtQuick
 import QtQuick.Controls
-import DataSpliter
+import QtQuick.Window
 
 Window{
     width:720
