@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.16)
 project(dataSpliter VERSION 0.1 LANGUAGES CXX)
 
 set(CMAKE_AUTOMOC ON)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 find_package(Qt6 REQUIRED COMPONENTS Quick)
@@ -28,8 +29,7 @@ qt_add_qml_module(appdataSpliter
     SOURCES
         c++/backend/Backend.h
         c++/backend/Backend.cpp
-        SOURCES c++/backend/filetransor.h c++/backend/filetransor.cpp
-        RESOURCES README.md
+        c++/backend/filetransor.h c++/backend/filetransor.cpp
 )
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
@@ -40,7 +40,7 @@ set_target_properties(appdataSpliter PROPERTIES
     MACOSX_BUNDLE_BUNDLE_VERSION ${PROJECT_VERSION}
     MACOSX_BUNDLE_SHORT_VERSION_STRING ${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}
     MACOSX_BUNDLE TRUE
-    WIN32_EXECUTABLE TRUE
+    #WIN32_EXECUTABLE TRUE
 )
 
 target_link_libraries(appdataSpliter
