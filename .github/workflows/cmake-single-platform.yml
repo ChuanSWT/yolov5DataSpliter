@@ -1,0 +1,47 @@
+name: Qt Build
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  build:
+
+    runs-on: windows-2022
+
+    steps:
+
+    - uses: actions/checkout@v4
+
+    - name: Install Qt
+      uses: jurplel/install-qt-action@v4
+      with:
+        version: '6.7.2'
+        cache: true
+
+    - name: Configure
+      run: >
+        cmake -B build
+        -G Ninja
+        -DCMAKE_BUILD_TYPE=Release
+
+    - name: Build
+      run: cmake --build build
+
+    - name: Create Deploy Folder
+      run: mkdir deploy
+
+    - name: Copy EXE
+      run: copy build\appdataSpliter.exe deploy\
+
+    - name: Deploy Qt
+      shell: pwsh
+      run: |
+        $windeploy = Get-ChildItem "C:\*" -Recurse -Filter windeployqt.exe -ErrorAction SilentlyContinue | Select-Object -First 1
+        & $windeploy.FullName --qmldir . deploy\appdataSpliter.exe
+
+    - name: Upload
+      uses: actions/upload-artifact@v4
+      with:
+        name: windows-build
+        path: deploy/
