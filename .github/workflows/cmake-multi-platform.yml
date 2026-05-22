@@ -11,40 +11,25 @@ jobs:
 
     steps:
 
-    - name: Checkout
-      uses: actions/checkout@v4
-
-    - name: Install Ninja
-      uses: seanmiddleditch/gha-setup-ninja@v5
+    - uses: actions/checkout@v4
 
     - name: Install Qt
       uses: jurplel/install-qt-action@v4
       with:
         version: '6.7.2'
-        cache: true
 
     - name: Configure
       run: >
         cmake -B build
-        -G Ninja
         -DCMAKE_BUILD_TYPE=Release
-        -DCMAKE_RUNTIME_OUTPUT_DIRECTORY=build/bin
-
     - name: Build
-      run: cmake --build build
+      run: cmake --build build --config Release
 
     - name: Deploy Qt
-      shell: cmd
       run: |
-        windeployqt --qmldir . build\bin\appdataSpliter.exe
-
-    - name: Verify
-      shell: cmd
-      run: |
-        if not exist build\bin\appdataSpliter.exe exit 1
-
+        windeployqt --qmldir . build\Release\appdataSpliter.exe
     - name: Upload
       uses: actions/upload-artifact@v4
       with:
         name: windows-build
-        path: build/bin/
+        path: build/Release/
